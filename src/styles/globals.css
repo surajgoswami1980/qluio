@@ -5,37 +5,132 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    color-scheme: dark;
   }
 
   body {
-    @apply bg-white text-gray-900 antialiased;
+    @apply bg-navy text-slate-300 antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  ::selection {
+    background: rgba(37, 99, 235, 0.45);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme("colors.accent.400");
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Native select dropdown options on dark surfaces */
+  select option {
+    background-color: #0d1b2a;
+    color: #fff;
+  }
+
+  input[type="checkbox"] {
+    accent-color: theme("colors.primary.600");
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
 @layer components {
-  .gradient-text {
-    @apply bg-gradient-to-r from-primary-900 via-primary-700 to-accent-600 bg-clip-text text-transparent;
-  }
-
-  .gradient-bg {
-    @apply bg-gradient-to-br from-primary-900 via-primary-800 to-accent-900;
-  }
-
-  .glass-card {
-    @apply bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl;
-  }
-
-  .section-padding {
-    @apply px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24;
-  }
-
   .container-max {
-    @apply max-w-7xl mx-auto;
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-20 sm:py-24 lg:py-32;
+  }
+
+  /* Frosted glass surface */
+  .glass {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.055) 0%,
+      rgba(255, 255, 255, 0.018) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    @apply shadow-glass;
+  }
+
+  .glass-strong {
+    background: linear-gradient(
+      180deg,
+      rgba(13, 27, 42, 0.82) 0%,
+      rgba(8, 20, 38, 0.72) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    @apply shadow-glass;
+  }
+
+  /* Headline gradient — white fading into slate */
+  .text-gradient {
+    @apply bg-gradient-to-b from-white via-white to-slate-400 bg-clip-text text-transparent;
+  }
+
+  /* Brand gradient — blue into cyan */
+  .text-brand {
+    @apply bg-gradient-to-r from-primary-400 via-sky-400 to-accent-400 bg-clip-text text-transparent;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-medium tracking-wide text-slate-300;
+  }
+
+  /* Subtle background grid */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, #000 30%, transparent 75%);
+  }
+
+  /* Hairline gradient divider */
+  .hairline {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.12),
+      transparent
+    );
+  }
+
+  /* Form fields on glass */
+  .field {
+    @apply w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-[15px] text-white placeholder:text-slate-500 transition-colors duration-200 hover:border-white/20 focus:border-primary-500 focus:bg-white/[0.05] focus:outline-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-500/20;
+  }
+
+  .field[aria-invalid="true"] {
+    @apply border-red-400/70 focus:border-red-400 focus-visible:ring-red-400/20;
   }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
   }
 }

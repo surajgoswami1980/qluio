@@ -2,24 +2,26 @@ import { cn } from "@/lib/utils";
 import { type HTMLAttributes, forwardRef } from "react";
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: "default" | "glass" | "elevated";
+  /** Adds a hover lift + glowing border. */
+  interactive?: boolean;
 }
 
+/** Frosted glass card used across the site. */
 const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant = "default", children, ...props }, ref) => {
-    const variants = {
-      default: "bg-white rounded-2xl border border-gray-100",
-      glass: "glass-card",
-      elevated:
-        "bg-white rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300",
-    };
-
-    return (
-      <div ref={ref} className={cn(variants[variant], className)} {...props}>
-        {children}
-      </div>
-    );
-  }
+  ({ className, interactive, children, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        "glass relative rounded-2xl",
+        interactive &&
+          "transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:bg-white/[0.06]",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  )
 );
 
 Card.displayName = "Card";

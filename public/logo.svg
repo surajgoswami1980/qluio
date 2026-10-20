@@ -1,30 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
-  <!-- Rounded square background with gradient -->
   <defs>
-    <linearGradient id="bg-grad" x1="0" y1="0" x2="48" y2="48">
-      <stop offset="0%" stop-color="#1e3a5f"/>
-      <stop offset="100%" stop-color="#7e22ce"/>
+    <linearGradient id="syn-bg" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0d1b2a"/>
+      <stop offset="100%" stop-color="#081426"/>
     </linearGradient>
-    <linearGradient id="star-grad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#fbbf24"/>
-      <stop offset="100%" stop-color="#f97316"/>
+    <linearGradient id="syn-mark" x1="12" y1="12" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
     </linearGradient>
   </defs>
-  
-  <!-- Background rounded square -->
-  <rect x="2" y="2" width="44" height="44" rx="12" fill="url(#bg-grad)"/>
-  
-  <!-- Stylized "E" letter made of 3 horizontal bars with rounded ends -->
-  <rect x="12" y="12" width="18" height="3.5" rx="1.75" fill="white"/>
-  <rect x="12" y="22.25" width="14" height="3.5" rx="1.75" fill="white" opacity="0.9"/>
-  <rect x="12" y="32.5" width="18" height="3.5" rx="1.75" fill="white"/>
-  
-  <!-- Vertical bar of E -->
-  <rect x="12" y="12" width="3.5" height="24" rx="1.75" fill="white"/>
-  
-  <!-- Nova/star burst (top right) representing innovation -->
-  <path d="M36 8 L37.5 13 L42 12 L38.5 15.5 L42 19 L37.5 17.5 L36 22 L34.5 17.5 L30 19 L33.5 15.5 L30 12 L34.5 13 Z" fill="url(#star-grad)"/>
-  
-  <!-- Small accent dot -->
-  <circle cx="36" cy="34" r="3" fill="#fbbf24" opacity="0.8"/>
+
+  <!-- Rounded tile -->
+  <rect x="2" y="2" width="44" height="44" rx="12" fill="url(#syn-bg)"/>
+
+  <!-- Interlocking "S" node mark: two arcs forming a connected system -->
+  <path d="M31 16.5c-1.8-1.9-4.4-3-7.3-3-5.2 0-9.2 3.6-9.2 8 0 3.6 2.6 5.7 6.9 6.8"
+        stroke="url(#syn-mark)" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+  <path d="M17 31.5c1.8 1.9 4.4 3 7.3 3 5.2 0 9.2-3.6 9.2-8 0-3.6-2.6-5.7-6.9-6.8"
+        stroke="url(#syn-mark)" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+
+  <!-- Connection nodes -->
+  <circle cx="31" cy="16.5" r="2.6" fill="#06b6d4"/>
+  <circle cx="17" cy="31.5" r="2.6" fill="#2563eb"/>
 </svg>

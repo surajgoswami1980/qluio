@@ -1,117 +1,149 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
-import Button from "@/components/ui/Button";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, BrainCircuit, Cloud, Code2, Database, Plug, Sparkles } from "lucide-react";
+import { ButtonLink } from "@/components/ui/Button";
+import Badge from "@/components/ui/Badge";
+import Aurora from "@/components/ui/Aurora";
+import { company } from "@/lib/site";
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const pipeline = [
+  { icon: Database, label: "Data" },
+  { icon: BrainCircuit, label: "AI" },
+  { icon: Plug, label: "APIs" },
+  { icon: Cloud, label: "Cloud" },
+];
+
+function CodeLine({ n, children }: { n: number; children: React.ReactNode }) {
+  return (
+    <div className="flex gap-4">
+      <span className="w-4 select-none text-right text-slate-600">{n}</span>
+      <span className="whitespace-pre">{children}</span>
+    </div>
+  );
+}
+
+/** Decorative product visual — illustrative only, no real data. */
+function HeroVisual() {
+  return (
+    <div aria-hidden="true" className="relative mx-auto mt-20 max-w-5xl">
+      <div className="absolute -inset-x-10 -top-10 bottom-0 rounded-[40px] bg-gradient-to-b from-primary-600/20 via-accent-500/5 to-transparent blur-3xl" />
+
+      <div className="glass-strong relative overflow-hidden rounded-2xl sm:rounded-3xl">
+        {/* window chrome */}
+        <div className="flex items-center gap-2 border-b border-white/[0.06] px-4 py-3">
+          <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+          <span className="ml-3 rounded-md bg-white/[0.04] px-2.5 py-1 font-mono text-[11px] text-slate-500">
+            synteriq / platform
+          </span>
+        </div>
+
+        <div className="grid md:grid-cols-5">
+          {/* code */}
+          <div className="border-white/[0.06] p-5 font-mono text-[12px] leading-6 text-slate-400 sm:p-6 sm:text-[13px] md:col-span-3 md:border-r">
+            <CodeLine n={1}><span className="text-accent-300">const</span> assistant = <span className="text-primary-300">createAgent</span>({"{"}</CodeLine>
+            <CodeLine n={2}>{"  "}model: <span className="text-emerald-300">&quot;your-llm&quot;</span>,</CodeLine>
+            <CodeLine n={3}>{"  "}tools: [search, crm, billing],</CodeLine>
+            <CodeLine n={4}>{"  "}guardrails: <span className="text-accent-300">true</span>,</CodeLine>
+            <CodeLine n={5}>{"}"});</CodeLine>
+            <CodeLine n={6}> </CodeLine>
+            <CodeLine n={7}><span className="text-accent-300">await</span> pipeline.<span className="text-primary-300">deploy</span>({"{"} env: <span className="text-emerald-300">&quot;production&quot;</span> {"}"});</CodeLine>
+            <div className="mt-3 flex items-center gap-2 text-[12px] text-emerald-300/90">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              build passing · tests green
+            </div>
+          </div>
+
+          {/* pipeline */}
+          <div className="hidden flex-col justify-center gap-3 p-6 md:col-span-2 md:flex">
+            {pipeline.map((step, i) => {
+              const Icon = step.icon;
+              return (
+                <motion.div
+                  key={step.label}
+                  initial={{ opacity: 0, x: 12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 + i * 0.1, ease }}
+                  className="flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.03] px-3.5 py-2.5"
+                >
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary-500/30 to-accent-500/20 text-accent-300">
+                    <Icon className="h-4 w-4" />
+                  </span>
+                  <span className="text-sm text-slate-200">{step.label}</span>
+                  <span className="ml-auto h-1.5 w-1.5 rounded-full bg-accent-400 animate-pulse-soft" style={{ animationDelay: `${i * 0.4}s` }} />
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* floating chips */}
+      <div className="glass absolute -left-4 top-1/3 hidden animate-float items-center gap-2.5 rounded-xl px-3.5 py-2.5 lg:flex">
+        <Code2 className="h-4 w-4 text-primary-300" />
+        <span className="text-xs text-slate-200">Custom software</span>
+      </div>
+      <div className="glass absolute -right-4 bottom-10 hidden animate-float-slow items-center gap-2.5 rounded-xl px-3.5 py-2.5 lg:flex">
+        <Sparkles className="h-4 w-4 text-accent-300" />
+        <span className="text-xs text-slate-200">AI built in</span>
+      </div>
+    </div>
+  );
+}
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 gradient-bg" />
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0aDR2MWgtNHYtMXptMC0yaDF2NGgtMXYtNHptMi0yaDF2MWgtMXYtMXptLTIgMGgxdjFoLTF2LTF6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-50" />
-
-      {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-accent-500/20 rounded-full blur-3xl animate-float" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: "3s" }} />
-
-      <div className="relative container-max mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
-        <div className="text-center max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white/10 text-white/90 backdrop-blur-sm border border-white/20 mb-6">
-              🎓 Trusted by 100+ Schools Across India
-            </span>
+    <section className="relative overflow-hidden pt-36 pb-20 sm:pt-44 sm:pb-28">
+      <Aurora />
+      <div className="container-max relative">
+        <div className="mx-auto max-w-4xl text-center">
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease }}>
+            <Badge dot>Enterprise software · AI · SaaS · Cloud</Badge>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6"
+            transition={{ duration: 0.7, delay: 0.06, ease }}
+            className="mt-7 text-[2.6rem] font-semibold leading-[1.02] tracking-[-0.035em] text-balance sm:text-6xl lg:text-7xl"
           >
-            Transform Your{" "}
-            <span className="bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">
-              School Management
-            </span>
+            <span className="text-gradient">Intelligent software.</span>
+            <br />
+            <span className="text-brand">Built for what&apos;s next.</span>
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-10"
+            transition={{ duration: 0.7, delay: 0.12, ease }}
+            className="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-slate-400 text-pretty sm:text-lg"
           >
-            Edunova is India&apos;s most comprehensive school management platform.
-            Automate admissions, attendance, fees, exams, and more — all in one
-            place. Built for CBSE, ICSE, and State Board schools.
+            {company.name} designs and engineers enterprise platforms, AI
+            solutions, and SaaS products that help organizations ship faster,
+            automate the repetitive, and operate smarter.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            transition={{ duration: 0.7, delay: 0.18, ease }}
+            className="mt-10 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center"
           >
-            <Link href="/pricing">
-              <Button size="lg" className="w-full sm:w-auto">
-                Start Free Trial
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </Link>
-            <Link href="/demo">
-              <Button variant="secondary" size="lg" className="w-full sm:w-auto">
-                <Play className="w-5 h-5 mr-2" />
-                Book a Demo
-              </Button>
-            </Link>
+            <ButtonLink href="/contact" size="lg">
+              Start a project
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </ButtonLink>
+            <ButtonLink href="/services" variant="secondary" size="lg">
+              Explore services
+            </ButtonLink>
           </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-sm text-gray-400 mt-6"
-          >
-            30-day free trial • No credit card required • Setup in minutes
-          </motion.p>
         </div>
 
-        {/* Dashboard Preview Placeholder */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-16 relative max-w-4xl mx-auto"
-        >
-          <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-4 shadow-2xl">
-            <div className="bg-gray-900/80 rounded-xl p-8 min-h-[300px] flex items-center justify-center">
-              <div className="text-center">
-                <div className="grid grid-cols-3 gap-4 mb-6">
-                  <div className="bg-primary-900/50 rounded-lg p-4 border border-primary-700/30">
-                    <p className="text-2xl font-bold text-white">2,450</p>
-                    <p className="text-xs text-gray-400">Total Students</p>
-                  </div>
-                  <div className="bg-accent-900/50 rounded-lg p-4 border border-accent-700/30">
-                    <p className="text-2xl font-bold text-white">94.2%</p>
-                    <p className="text-xs text-gray-400">Attendance Today</p>
-                  </div>
-                  <div className="bg-green-900/50 rounded-lg p-4 border border-green-700/30">
-                    <p className="text-2xl font-bold text-white">₹12.4L</p>
-                    <p className="text-xs text-gray-400">Fees Collected</p>
-                  </div>
-                </div>
-                <p className="text-gray-500 text-sm">
-                  📊 Live Dashboard Preview — Real-time school analytics at your fingertips
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+        <HeroVisual />
       </div>
     </section>
   );

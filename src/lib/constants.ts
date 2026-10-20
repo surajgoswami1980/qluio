@@ -1,298 +1,174 @@
 import {
-  Users,
-  GraduationCap,
-  ClipboardCheck,
-  CreditCard,
-  Calendar,
-  FileText,
-  BookOpen,
-  Bell,
-  Bus,
-  Library,
+  Code2,
+  BrainCircuit,
+  LayoutGrid,
+  Cloud,
+  Plug,
+  Smartphone,
+  ShieldCheck,
+  GitBranch,
+  LineChart,
+  Workflow,
   type LucideIcon,
 } from "lucide-react";
 
-export interface Feature {
+export interface Service {
   icon: LucideIcon;
   title: string;
   description: string;
   details: string[];
 }
 
-export const features: Feature[] = [
-  {
-    icon: Users,
-    title: "Student Management",
-    description:
-      "Complete student lifecycle management from admission to alumni tracking.",
-    details: [
-      "Admission & enrollment management",
-      "Student profiles with photo & documents",
-      "Class & section allocation",
-      "Promotion & transfer management",
-      "Alumni tracking & communication",
-    ],
-  },
-  {
-    icon: GraduationCap,
-    title: "Teacher & Staff Management",
-    description:
-      "Streamline HR operations for teaching and non-teaching staff.",
-    details: [
-      "Staff profiles & document management",
-      "Leave management & approval workflows",
-      "Payroll integration ready",
-      "Performance tracking",
-      "Department & designation management",
-    ],
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Attendance Management",
-    description:
-      "Digital attendance for students and staff with real-time tracking.",
-    details: [
-      "Biometric & app-based attendance",
-      "Subject-wise attendance tracking",
-      "Auto SMS/notification to parents",
-      "Attendance reports & analytics",
-      "Late arrival tracking",
-    ],
-  },
-  {
-    icon: CreditCard,
-    title: "Fee Management",
-    description:
-      "Automated fee collection with online payment via Razorpay integration.",
-    details: [
-      "Custom fee structures per class",
-      "Online payment via Razorpay",
-      "Auto receipt generation",
-      "Due date reminders & late fees",
-      "Scholarship & discount management",
-    ],
-  },
-  {
-    icon: Calendar,
-    title: "Timetable & Scheduling",
-    description:
-      "Smart timetable generation with conflict detection and substitution management.",
-    details: [
-      "Auto timetable generation",
-      "Teacher workload balancing",
-      "Substitution management",
-      "Exam schedule planning",
-      "Room allocation & management",
-    ],
-  },
-  {
-    icon: FileText,
-    title: "Exam & Report Cards",
-    description:
-      "Complete examination management from scheduling to report card generation.",
-    details: [
-      "Multiple exam pattern support (CBSE, ICSE, State)",
-      "Online & offline exam management",
-      "Auto report card generation",
-      "Grade & marks customization",
-      "Board-wise result format",
-    ],
-  },
-  {
-    icon: BookOpen,
-    title: "Homework & Assignments",
-    description:
-      "Digital homework distribution and submission tracking for teachers and students.",
-    details: [
-      "Subject-wise homework assignment",
-      "File upload & submission",
-      "Deadline tracking",
-      "Parent notification on assignment",
-      "Completion analytics",
-    ],
-  },
-  {
-    icon: Bell,
-    title: "Notifications",
-    description:
-      "Multi-channel communication via Push, Email, and SMS notifications.",
-    details: [
-      "Push notifications (mobile & web)",
-      "Bulk SMS campaigns",
-      "Email notifications",
-      "Event-triggered auto alerts",
-      "Custom notification templates",
-    ],
-  },
-  {
-    icon: Bus,
-    title: "Transport Management",
-    description:
-      "GPS tracking, route planning, and fleet management for school buses.",
-    details: [
-      "Route planning & optimization",
-      "GPS live tracking",
-      "Student pickup/drop management",
-      "Driver & vehicle management",
-      "Transport fee integration",
-    ],
-  },
-  {
-    icon: Library,
-    title: "Library Management",
-    description:
-      "Complete digital library system with book tracking and fine management.",
-    details: [
-      "Book cataloging & search",
-      "Issue & return tracking",
-      "Fine calculation & management",
-      "Digital library integration",
-      "Reading analytics & reports",
-    ],
-  },
-];
-
-export interface PricingPlan {
-  name: string;
-  description: string;
-  monthlyPrice: number;
-  annualPrice: number;
-  studentLimit: string;
-  popular: boolean;
-  features: string[];
+/** URL-safe anchor id for a service, e.g. "AI & Automation" → "ai-automation". */
+export function serviceSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/&/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
-export const pricingPlans: PricingPlan[] = [
+/** Core services offered by Synteriq Technologies. */
+export const services: Service[] = [
   {
-    name: "Starter",
-    description: "Perfect for small schools getting started with digital management",
-    monthlyPrice: 4999,
-    annualPrice: 49999,
-    studentLimit: "Up to 300 students",
-    popular: false,
-    features: [
-      "Student Management",
-      "Teacher Management",
-      "Attendance (Student)",
-      "Fee Management with Online Payment",
-      "Timetable Management",
-      "Exam & Report Cards",
-      "Push Notifications",
-      "Email Support",
-      "Basic Reports & Analytics",
-      "Mobile App Access",
+    icon: Code2,
+    title: "Custom Software Development",
+    description:
+      "Design and engineering of bespoke platforms built around your business logic, not a rigid template.",
+    details: [
+      "Product discovery & technical architecture",
+      "Full-stack web application engineering",
+      "Legacy system modernization",
+      "Scalable, maintainable codebases",
+      "Long-term support & iteration",
     ],
   },
   {
-    name: "Growth",
-    description: "Ideal for growing schools that need comprehensive features",
-    monthlyPrice: 9999,
-    annualPrice: 99999,
-    studentLimit: "Up to 1,000 students",
-    popular: true,
-    features: [
-      "Everything in Starter, plus:",
-      "Staff Attendance & Leave Management",
-      "Homework & Assignments",
-      "Transport Management",
-      "Library Management",
-      "SMS Notifications (500 free/month)",
-      "Parent & Student Portals",
-      "Advanced Reports & Analytics",
-      "Priority Email & Chat Support",
-      "Custom Report Card Formats",
-      "30-Day Free Trial",
+    icon: BrainCircuit,
+    title: "AI & Automation",
+    description:
+      "Practical AI and workflow automation that removes repetitive work and surfaces better decisions.",
+    details: [
+      "LLM-powered assistants & copilots",
+      "Document & data extraction pipelines",
+      "Intelligent process automation",
+      "Model integration & evaluation",
+      "Human-in-the-loop guardrails",
     ],
   },
   {
-    name: "Enterprise",
-    description: "For large institutions and school chains needing full power",
-    monthlyPrice: 19999,
-    annualPrice: 199999,
-    studentLimit: "Unlimited students",
-    popular: false,
-    features: [
-      "Everything in Growth, plus:",
-      "Multi-branch Management",
-      "Custom Branding & White Label",
-      "API Access & Integrations",
-      "Dedicated Account Manager",
-      "On-premise Deployment Option",
-      "Custom Module Development",
-      "SLA Guarantee (99.9% uptime)",
-      "Phone, Email & Chat Support",
-      "Data Migration Assistance",
-      "Training & Onboarding Sessions",
+    icon: LayoutGrid,
+    title: "SaaS Product Development",
+    description:
+      "End-to-end SaaS engineering — from multi-tenant foundations to billing, onboarding, and analytics.",
+    details: [
+      "Multi-tenant architecture",
+      "Subscription & billing integration",
+      "Role-based access & admin tooling",
+      "Usage analytics & dashboards",
+      "Release and feature-flag workflows",
+    ],
+  },
+  {
+    icon: Cloud,
+    title: "Cloud & DevOps",
+    description:
+      "Reliable cloud foundations with automated delivery, observability, and cost-aware scaling.",
+    details: [
+      "Cloud architecture & migration",
+      "CI/CD pipelines & infrastructure as code",
+      "Containerization & orchestration",
+      "Monitoring, logging & alerting",
+      "Performance & cost optimization",
+    ],
+  },
+  {
+    icon: Plug,
+    title: "API & System Integration",
+    description:
+      "Connect the tools and data silos your business depends on into one coherent, dependable flow.",
+    details: [
+      "REST & GraphQL API design",
+      "Third-party & payment integrations",
+      "Event-driven & messaging architectures",
+      "Data synchronization & webhooks",
+      "Secure authentication & API gateways",
+    ],
+  },
+  {
+    icon: Smartphone,
+    title: "Mobile Application Development",
+    description:
+      "Cross-platform and native mobile apps that stay fast, accessible, and consistent with your web experience.",
+    details: [
+      "iOS & Android delivery",
+      "Cross-platform engineering",
+      "Offline-first & sync strategies",
+      "Push notifications & deep linking",
+      "App store release support",
     ],
   },
 ];
 
-export interface Addon {
-  name: string;
-  price: string;
-  type: string;
+export interface Capability {
+  icon: LucideIcon;
+  title: string;
   description: string;
 }
 
-export const addons: Addon[] = [
+/** Cross-cutting engineering principles / why work with Synteriq. */
+export const capabilities: Capability[] = [
   {
-    name: "SMS Pack",
-    price: "₹1,500",
-    type: "10,000 SMS",
-    description: "Bulk SMS credits for notifications and alerts",
+    icon: ShieldCheck,
+    title: "Security by Design",
+    description:
+      "Secure defaults, input validation, and least-privilege access are built in from the first commit.",
   },
   {
-    name: "Custom Branding",
-    price: "₹2,999",
-    type: "One-time",
-    description: "Your logo, colors, and domain for the platform",
+    icon: Workflow,
+    title: "Clear Delivery Process",
+    description:
+      "Transparent milestones, frequent demos, and documentation so you always know where a project stands.",
   },
   {
-    name: "Dedicated Support",
-    price: "₹4,999/month",
-    type: "Monthly",
-    description: "Priority support with dedicated account manager",
+    icon: GitBranch,
+    title: "Maintainable Engineering",
+    description:
+      "Tested, reviewed, and documented code that your team can own and extend long after launch.",
   },
   {
-    name: "Onboarding & Setup",
-    price: "₹9,999",
-    type: "One-time",
-    description: "Complete setup, data migration, and staff training",
+    icon: LineChart,
+    title: "Built to Scale",
+    description:
+      "Architectures that start lean and grow with demand without a costly rewrite down the line.",
   },
 ];
 
-export interface Testimonial {
-  name: string;
-  role: string;
-  school: string;
-  content: string;
-  rating: number;
+export interface ProcessStep {
+  step: string;
+  title: string;
+  description: string;
 }
 
-export const testimonials: Testimonial[] = [
+/** How Synteriq works with a client, from first conversation to launch. */
+export const processSteps: ProcessStep[] = [
   {
-    name: "Dr. Rajesh Kumar",
-    role: "Principal",
-    school: "Delhi Public School, Noida",
-    content:
-      "Edunova ERP has completely transformed how we manage our school. The fee collection automation alone saved us 20 hours per week. The parent portal keeps families engaged and informed.",
-    rating: 5,
+    step: "01",
+    title: "Discovery & Scope",
+    description:
+      "We start by understanding your goals, constraints, and users, then shape a clear scope and technical approach.",
   },
   {
-    name: "Mrs. Priya Sharma",
-    role: "Director",
-    school: "St. Mary's Convent School, Jaipur",
-    content:
-      "We evaluated 5 different ERP systems before choosing Edunova. The ease of use and Indian education board support (CBSE patterns) made it a clear winner. Our teachers adapted within a week.",
-    rating: 5,
+    step: "02",
+    title: "Design & Build",
+    description:
+      "We design the experience and engineer it in short, reviewable increments, with regular demos so you stay in control.",
   },
   {
-    name: "Mr. Arun Patel",
-    role: "Administrator",
-    school: "Greenfield International School, Pune",
-    content:
-      "The transport module with GPS tracking gave parents peace of mind, and the automated attendance notifications reduced absenteeism by 30%. Best investment we made for our school.",
-    rating: 5,
+    step: "03",
+    title: "Launch & Evolve",
+    description:
+      "We ship to production, monitor real usage, and keep iterating — adding capabilities as your needs grow.",
   },
 ];
 
@@ -303,58 +179,73 @@ export interface FAQ {
 
 export const faqs: FAQ[] = [
   {
-    question: "Is there a free trial available?",
+    question: "What kinds of projects does Synteriq take on?",
     answer:
-      "Yes! We offer a 30-day free trial on our Growth plan. No credit card required. You get full access to all Growth features to evaluate the platform with your school data.",
+      "We work on custom software platforms, AI and automation initiatives, SaaS products, cloud and DevOps engagements, system integrations, and mobile applications. If your project spans several of these areas, we can bring them together into one delivery plan.",
   },
   {
-    question: "How long does setup take?",
+    question: "Can you join an existing project or team?",
     answer:
-      "Most schools are up and running within 2-3 days. Our onboarding team helps with data migration, configuration, and staff training. Complex setups with legacy data may take up to a week.",
+      "Yes. We can take ownership of a greenfield build, improve and modernize an existing platform, or work alongside your in-house team to accelerate delivery.",
   },
   {
-    question: "Can we switch plans later?",
+    question: "How do engagements usually start?",
     answer:
-      "Absolutely! You can upgrade or downgrade your plan at any time. When upgrading, you only pay the prorated difference. Downgrades take effect at the next billing cycle.",
+      "Most engagements begin with a short discovery conversation about your goals and constraints. From there we define scope, a technical approach, and a delivery plan before any build work begins.",
   },
   {
-    question: "Is our data secure?",
+    question: "What technologies do you work with?",
     answer:
-      "We use bank-grade encryption (AES-256) for all data. Our servers are hosted on AWS India (Mumbai region) with daily backups, and we are compliant with Indian data protection regulations.",
+      "We select the stack based on the problem rather than forcing one toolset. In practice that spans modern web frameworks, cloud platforms, data pipelines, and AI/LLM integrations, chosen for maintainability and fit.",
   },
   {
-    question: "What about the 1.5% platform fee on payments?",
+    question: "How is MyClasses related to Synteriq?",
     answer:
-      "The 1.5% platform commission applies only to fee payments processed through our integrated Razorpay gateway. This is in addition to Razorpay's standard 2% transaction fee. Schools can also accept offline payments with no commission.",
+      "MyClasses is a SaaS product built and operated by Synteriq Technologies. It reflects the same engineering practices we bring to client work and is part of our product portfolio.",
   },
   {
-    question: "Do you support multiple branches?",
+    question: "How do I get in touch?",
     answer:
-      "Yes! Our Enterprise plan supports multi-branch management with centralized or decentralized control. Each branch can have its own configuration while sharing a unified dashboard.",
+      "Use the Contact page to tell us about your goals and the type of project you have in mind. Share as much context as you can, and we'll follow up to explore how we can help.",
   },
-  {
-    question: "What boards and exam patterns do you support?",
-    answer:
-      "We support CBSE, ICSE, and all major State Board exam patterns. Report cards can be customized to match your board's format. We also support custom grading systems.",
-  },
-  {
-    question: "Is training provided for our staff?",
-    answer:
-      "Yes, we provide online training sessions for all plans. The Enterprise plan includes on-site training. We also have a comprehensive knowledge base and video tutorials.",
-  },
+];
+
+/** Inquiry types for the contact form dropdown. */
+export const inquiryTypes = [
+  "Custom Software Development",
+  "AI and Automation",
+  "SaaS Product Development",
+  "Web Application Development",
+  "Cloud and DevOps",
+  "API and System Integration",
+  "Mobile Application Development",
+  "MyClasses",
+  "Other",
+];
+
+/** Configurable budget ranges for the contact form (optional field). */
+export const budgetRanges = [
+  "Not sure yet",
+  "Under $10,000",
+  "$10,000 – $25,000",
+  "$25,000 – $50,000",
+  "$50,000 – $100,000",
+  "$100,000+",
+];
+
+/** Configurable project timelines for the contact form (optional field). */
+export const timelineOptions = [
+  "As soon as possible",
+  "Within 1–3 months",
+  "Within 3–6 months",
+  "6+ months",
+  "Just exploring",
 ];
 
 export const navLinks = [
   { name: "Home", href: "/" },
-  { name: "Features", href: "/features" },
-  { name: "Pricing", href: "/pricing" },
+  { name: "Services", href: "/services" },
+  { name: "Products", href: "/products" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
-];
-
-export const stats = [
-  { value: "100+", label: "Schools Trust Us" },
-  { value: "50,000+", label: "Students Managed" },
-  { value: "99.9%", label: "Uptime Guaranteed" },
-  { value: "24/7", label: "Support Available" },
 ];

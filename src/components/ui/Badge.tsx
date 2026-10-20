@@ -2,31 +2,19 @@ import { cn } from "@/lib/utils";
 import { type HTMLAttributes } from "react";
 
 interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  variant?: "default" | "success" | "popular";
+  /** Shows a softly pulsing status dot. */
+  dot?: boolean;
 }
 
-export default function Badge({
-  className,
-  variant = "default",
-  children,
-  ...props
-}: BadgeProps) {
-  const variants = {
-    default: "bg-primary-100 text-primary-900",
-    success: "bg-green-100 text-green-800",
-    popular:
-      "bg-gradient-to-r from-primary-900 to-accent-700 text-white",
-  };
-
+export default function Badge({ className, dot, children, ...props }: BadgeProps) {
   return (
-    <span
-      className={cn(
-        "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold",
-        variants[variant],
-        className
+    <span className={cn("eyebrow", className)} {...props}>
+      {dot && (
+        <span className="relative flex h-1.5 w-1.5" aria-hidden="true">
+          <span className="absolute inline-flex h-full w-full animate-pulse-soft rounded-full bg-accent-400" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent-400" />
+        </span>
       )}
-      {...props}
-    >
       {children}
     </span>
   );

@@ -1,76 +1,40 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { UserPlus, Settings, Rocket } from "lucide-react";
+import { processSteps } from "@/lib/constants";
 import SectionHeading from "@/components/ui/SectionHeading";
-
-const steps = [
-  {
-    icon: UserPlus,
-    step: "01",
-    title: "Sign Up & Choose Plan",
-    description:
-      "Create your account in 2 minutes. Pick the plan that fits your school size. Start with a 30-day free trial — no credit card needed.",
-  },
-  {
-    icon: Settings,
-    step: "02",
-    title: "Configure Your School",
-    description:
-      "Set up classes, sections, subjects, and fee structures. Import student data via Excel. Our team helps with onboarding if needed.",
-  },
-  {
-    icon: Rocket,
-    step: "03",
-    title: "Go Live & Grow",
-    description:
-      "Your school is digital! Teachers, students, and parents get their portals. Start managing everything from one dashboard.",
-  },
-];
+import Reveal from "@/components/ui/Reveal";
 
 export default function HowItWorks() {
   return (
-    <section className="section-padding">
-      <div className="container-max mx-auto">
+    <section className="section relative">
+      <div className="container-max">
         <SectionHeading
-          badge="Simple Setup"
-          title="Up and Running in 3 Steps"
-          subtitle="No technical expertise required. Get your school digitized in under a week."
+          badge="Our process"
+          title="A clear path from idea to launch"
+          subtitle="Transparent milestones and frequent demos mean you always know where your project stands."
         />
 
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-          {steps.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                className="relative text-center"
-              >
-                {/* Connector Line */}
-                {index < steps.length - 1 && (
-                  <div className="hidden md:block absolute top-16 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-primary-200 to-accent-200" />
-                )}
-
-                <div className="relative inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-900 to-accent-700 mb-6 shadow-lg">
-                  <Icon className="w-8 h-8 text-white" />
-                  <span className="absolute -top-2 -right-2 w-7 h-7 bg-white rounded-full flex items-center justify-center text-xs font-bold text-primary-900 shadow-md border border-gray-100">
+        <div className="relative mt-16">
+          {/* connector line */}
+          <div
+            aria-hidden="true"
+            className="absolute left-0 right-0 top-[27px] hidden h-px bg-gradient-to-r from-transparent via-primary-500/40 to-transparent md:block"
+          />
+          <ol className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {processSteps.map((item, index) => (
+              <li key={item.title} className="relative">
+                <Reveal delay={index * 0.1}>
+                  <span className="glass-strong relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl font-mono text-sm font-medium text-accent-300">
                     {item.step}
                   </span>
-                </div>
-
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {item.description}
-                </p>
-              </motion.div>
-            );
-          })}
+                  <div className="glass mt-6 rounded-2xl p-7">
+                    <h3 className="text-lg font-semibold text-white">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                      {item.description}
+                    </p>
+                  </div>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

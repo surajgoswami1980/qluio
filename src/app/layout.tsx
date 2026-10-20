@@ -1,61 +1,68 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
+export const viewport: Viewport = {
+  themeColor: "#081426",
+};
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://edunova.in"),
+  metadataBase: new URL("https://synteriq.com"),
   title: {
-    default: "Edunova - School Management Platform | India's #1 School ERP",
-    template: "%s | Edunova",
+    default: "Synteriq Technologies — Enterprise Software, AI & SaaS Engineering",
+    template: "%s | Synteriq Technologies",
   },
   description:
-    "India's leading School ERP SaaS platform by MS Technology Limited. Manage admissions, attendance, fees, exams, transport & more. Built for CBSE, ICSE & State Board schools. Start free trial today.",
+    "Synteriq Technologies builds enterprise software, AI solutions, SaaS products, and cloud platforms. Intelligent software, built for what's next.",
   keywords: [
-    "school ERP",
-    "school management software",
-    "school management system India",
-    "CBSE school software",
-    "fee management",
-    "student management",
-    "attendance management",
-    "school app",
-    "education technology",
-    "EdTech India",
-    "Edunova",
-    "MS Technology",
+    "enterprise software development",
+    "AI solutions",
+    "SaaS product development",
+    "cloud and DevOps",
+    "custom software",
+    "system integration",
+    "digital engineering",
+    "Synteriq Technologies",
+    "MyClasses",
   ],
-  authors: [{ name: "Edunova by MS Technology Limited" }],
+  authors: [{ name: "Synteriq Technologies" }],
   openGraph: {
     type: "website",
-    locale: "en_IN",
-    siteName: "Edunova",
-    title: "Edunova - Transform Your School Management",
+    siteName: "Synteriq Technologies",
+    title: "Synteriq Technologies — Intelligent Software. Built for What's Next.",
     description:
-      "India's most comprehensive school management platform. Automate admissions, attendance, fees, exams, and more.",
+      "Enterprise software, AI solutions, SaaS, and cloud engineering for organizations that want to ship faster and operate smarter.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Edunova - School Management Platform",
-    description:
-      "India's leading School ERP. Manage everything from one dashboard.",
+    title: "Synteriq Technologies",
+    description: "Enterprise software, AI solutions, SaaS, and cloud engineering.",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className={`scroll-smooth ${inter.variable}`}>
       <body className="font-sans">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-navy"
+        >
+          Skip to content
+        </a>
         <Navbar />
-        <main className="min-h-screen">{children}</main>
+        <main id="main-content" className="relative min-h-screen overflow-x-clip">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

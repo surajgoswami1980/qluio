@@ -1,117 +1,152 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, GraduationCap } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { navLinks } from "@/lib/constants";
-import Button from "@/components/ui/Button";
+import { company } from "@/lib/site";
+import { ButtonLink } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Close the mobile menu on route change and with Escape.
+  useEffect(() => setIsOpen(false), [pathname]);
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setIsOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen]);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100">
-      <div className="container-max mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <img src="/logo.svg" alt="Edunova" className="w-10 h-10" />
-            <span className="text-xl font-bold text-primary-900">
-              Edunova
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
+      <nav
+        aria-label="Main"
+        className={cn(
+          "mx-auto max-w-6xl rounded-2xl border transition-all duration-300",
+          scrolled || isOpen
+            ? "glass-strong border-white/10"
+            : "border-transparent bg-transparent"
+        )}
+      >
+        <div className="flex h-14 items-center justify-between pl-4 pr-2 sm:h-16 sm:pl-5 sm:pr-3">
+          <Link
+            href="/"
+            className="flex items-center gap-2.5 rounded-lg"
+            aria-label={`${company.name} — home`}
+          >
+            <img src="/logo.svg" alt="" aria-hidden="true" width={32} height={32} className="h-8 w-8" />
+            <span className="text-[15px] font-semibold tracking-tight text-white">
+              Synteriq
+              <span className="hidden font-normal text-slate-400 sm:inline"> Technologies</span>
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "text-sm font-medium transition-colors duration-200 hover:text-primary-900",
-                  pathname === link.href
-                    ? "text-primary-900"
-                    : "text-gray-600"
-                )}
-              >
-                {link.name}
-              </Link>
-            ))}
+          <ul className="hidden items-center gap-1 lg:flex">
+            {navLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "relative rounded-full px-4 py-2 text-sm transition-colors duration-200",
+                      active ? "text-white" : "text-slate-400 hover:text-white"
+                    )}
+                  >
+                    {active && (
+                      <motion.span
+                        layoutId="nav-pill"
+                        className="absolute inset-0 rounded-full border border-white/10 bg-white/[0.07]"
+                        transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                      />
+                    )}
+                    <span className="relative">{link.name}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="hidden lg:block">
+            <ButtonLink href="/contact" size="sm">
+              Start a project
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </ButtonLink>
           </div>
 
-          {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center gap-3">
-            <Link href="/demo">
-              <Button variant="outline" size="sm">
-                Book Demo
-              </Button>
-            </Link>
-            <Link href="/pricing">
-              <Button size="sm">Start Free Trial</Button>
-            </Link>
-          </div>
-
-          {/* Mobile Menu Button */}
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
-            aria-label="Toggle menu"
+            type="button"
+            onClick={() => setIsOpen((v) => !v)}
+            className="rounded-xl p-2.5 text-white transition-colors hover:bg-white/10 lg:hidden"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
           >
-            {isOpen ? (
-              <X className="w-6 h-6 text-gray-900" />
-            ) : (
-              <Menu className="w-6 h-6 text-gray-900" />
-            )}
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
-      </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden border-t border-gray-100 bg-white"
-          >
-            <div className="px-4 py-4 space-y-3">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className={cn(
-                    "block px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-                    pathname === link.href
-                      ? "bg-primary-50 text-primary-900"
-                      : "text-gray-600 hover:bg-gray-50"
-                  )}
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <div className="pt-3 space-y-2 border-t border-gray-100">
-                <Link href="/demo" onClick={() => setIsOpen(false)}>
-                  <Button variant="outline" size="sm" className="w-full">
-                    Book Demo
-                  </Button>
-                </Link>
-                <Link href="/pricing" onClick={() => setIsOpen(false)}>
-                  <Button size="sm" className="w-full">
-                    Start Free Trial
-                  </Button>
-                </Link>
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <motion.div
+              id="mobile-menu"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden lg:hidden"
+            >
+              <div className="hairline mx-4" />
+              <ul className="space-y-1 p-3">
+                {navLinks.map((link) => {
+                  const active = isActive(link.href);
+                  return (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        aria-current={active ? "page" : undefined}
+                        className={cn(
+                          "flex items-center justify-between rounded-xl px-4 py-3 text-[15px] transition-colors",
+                          active
+                            ? "bg-white/[0.07] text-white"
+                            : "text-slate-300 hover:bg-white/[0.04] hover:text-white"
+                        )}
+                      >
+                        {link.name}
+                        {active && <span className="h-1.5 w-1.5 rounded-full bg-accent-400" />}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div className="px-3 pb-3">
+                <ButtonLink href="/contact" className="w-full">
+                  Start a project
+                  <ArrowRight className="h-4 w-4" />
+                </ButtonLink>
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </header>
   );
 }

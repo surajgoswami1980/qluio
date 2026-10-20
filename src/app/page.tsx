@@ -1,18 +1,18 @@
 import HeroSection from "@/components/home/HeroSection";
-import StatsBar from "@/components/home/StatsBar";
-import FeaturesGrid from "@/components/home/FeaturesGrid";
+import ServicesGrid from "@/components/home/ServicesGrid";
+import WhyUs from "@/components/home/WhyUs";
 import HowItWorks from "@/components/home/HowItWorks";
-import Testimonials from "@/components/home/Testimonials";
+import ProductSpotlight from "@/components/home/ProductSpotlight";
 import CTASection from "@/components/home/CTASection";
 
 export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <StatsBar />
-      <FeaturesGrid />
+      <ServicesGrid />
+      <WhyUs />
       <HowItWorks />
-      <Testimonials />
+      <ProductSpotlight />
       <CTASection />
     </>
   );
